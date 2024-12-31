@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using Npgsql;
-using Application.Activities;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
-
+builder.Services.AddApplicationServices(config: builder.Configuration );
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
