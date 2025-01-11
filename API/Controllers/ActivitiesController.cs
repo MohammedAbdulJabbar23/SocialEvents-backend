@@ -18,7 +18,7 @@ public class ActivitiesController : BaseApiController
     public ActivitiesController(IMediator mediator)
     {
         _mediator = mediator;
-    }
+    }ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetActivities(CancellationToken ct)
@@ -45,6 +45,7 @@ public class ActivitiesController : BaseApiController
         return HandleResult(await _mediator.Send(new Create.Command{Activity = activity}, ct));
         
     }
+    [Authorize(Policy = "IsActivityHost")]
     [HttpPut("{id}")]
     public async Task<IActionResult> EditActivity([FromRoute] Guid id, [FromBody] Activity activity, CancellationToken ct)
     {
@@ -52,10 +53,17 @@ public class ActivitiesController : BaseApiController
         return HandleResult(await _mediator.Send( new Edit.Command { Activity = activity}, ct));
         
     }
+
+    [Authorize(Policy = "IsActivityHost")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity([FromRoute] Guid id, CancellationToken ct)
     {
         return HandleResult(await _mediator.Send( new Delete.Command { Id = id}, ct));
+    }
+    [HttpPost("{id}/attend")]
+    public async Task<IActionResult> Attend(Guid id)
+    {
+        return HandleResult(await _mediator.Send(new UpdateAttendance.Command{Id = id}));
     }
 
 }

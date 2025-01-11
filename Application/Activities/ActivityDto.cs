@@ -1,7 +1,9 @@
+using Application.Profiles;
 
-namespace Domain;
+namespace Application.Activities;
 
-public class Activity
+
+public class ActivityDto
 {
     public Guid Id { get; set; }
     public required string Title { get; set; }
@@ -10,7 +12,7 @@ public class Activity
     public string? Category { get; set; }
     public required string City { get; set; }
     public required string Venue { get; set; }
-    public bool IsCancelled { get; set; } = false;
-    public ICollection<ActivityAttendee> Attendees { get; set; } 
-        = new List<ActivityAttendee>();
+    public required string HostUsername { get; set; }
+    public bool IsCancelled { get; set; }
+    public ICollection<Profile> Attendees { get; set; } = new List<Profile>();   
 }
