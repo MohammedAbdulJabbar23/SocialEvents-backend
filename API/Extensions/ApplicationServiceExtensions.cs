@@ -25,6 +25,7 @@ public static class ApplicationServiceExtensions
         services.AddValidatorsFromAssemblyContaining<Create>();
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
+        services.AddSignalR();
         return services;
     }
 }

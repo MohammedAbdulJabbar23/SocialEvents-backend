@@ -18,8 +18,7 @@ public class ActivitiesController : BaseApiController
     public ActivitiesController(IMediator mediator)
     {
         _mediator = mediator;
-    }ControllerBase
-
+    }
     [HttpGet]
     public async Task<IActionResult> GetActivities(CancellationToken ct)
     {
